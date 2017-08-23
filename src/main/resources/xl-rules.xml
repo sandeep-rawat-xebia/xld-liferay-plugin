@@ -138,7 +138,7 @@
             </os-script>
             <os-script>
                 <order>50</order>
-                <description expression="true">"Clean up temp files on %s Server" % ( deployed.container.name )</description>
+                <description expression="true">"Clean up temp and work files on %s Server" % ( deployed.container.name )</description>
                 <script>tomcat/liferay/cleanup</script>
                 <target-host expression="true">deployed.container.host</target-host>
                 <freemarker-context>
@@ -201,7 +201,7 @@
         </os-script>
         <os-script>
             <order>50</order>
-            <description expression="true">"Clean up temp files on %s Server" % ( previousDeployed.container.name )</description>
+            <description expression="true">"Clean up temp and work files on %s Server" % ( previousDeployed.container.name )</description>
             <script>tomcat/liferay/cleanup</script>
             <target-host expression="true">previousDeployed.container.host</target-host>
             <freemarker-context>
