@@ -147,7 +147,7 @@
                 </freemarker-context>
             </os-script>
             <upload>
-                <target-path expression="true">"%s/%s" % (deployed.container.deployDirectory, deployed.file.name)</target-path>
+                <target-path expression="true">"%s/%s" % (deployed.container.deployDirectory, deployed.targetFileName if deployed.targetFileName else deployed.file.name)</target-path>
                 <target-host expression="true">deployed.container.host</target-host>
                 <create-target-path>false</create-target-path>
                 <order>65</order>
