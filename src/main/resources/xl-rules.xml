@@ -125,18 +125,6 @@
         </conditions>
         <steps>
             <os-script>
-                <order>30</order>
-                <description expression="true">"Stop %s Server" % ( deployed.container.name )</description>
-                <script>tomcat/liferay/stop-tc</script>
-                <target-host expression="true">deployed.container.host</target-host>
-                <freemarker-context>
-                    <containerHome expression="true">deployed.container.server.home</containerHome>>
-                    <containerStatusCommand expression="true">deployed.container.server.statusCommand</containerStatusCommand>>
-                    <containerStopCommand expression="true">deployed.container.server.stopCommand</containerStopCommand>>
-                    <containerEnvVars expression="true">deployed.container.server.envVars</containerEnvVars>>
-                </freemarker-context>
-            </os-script>
-            <os-script>
                 <order>50</order>
                 <description expression="true">"Clean up temp and work files on %s Server" % ( deployed.container.name )</description>
                 <script>tomcat/liferay/cleanup</script>
@@ -161,6 +149,34 @@
                 <target-host expression="true">deployed.container.cell.host</target-host>
             </os-script>
             -->
+            <wait>
+                <order>75</order>
+                <description expression="true">"Wait for application %s to be installed" % (deployed.name)</description>
+                <seconds expression="true">deployed.waitTime</seconds>
+            </wait>
+        </steps>
+    </rule>
+
+    <rule name="liferay.TomcatWarModule.CREATE_MODIFY_STOP_START" scope="deployed">
+        <conditions>
+            <type>liferay.TomcatWarModule</type>
+            <operation>CREATE</operation>
+            <operation>MODIFY</operation>
+            <expression>deployed.stopStart is True</expression>
+        </conditions>
+        <steps>
+            <os-script>
+                <order>30</order>
+                <description expression="true">"Stop %s Server" % ( deployed.container.name )</description>
+                <script>tomcat/liferay/stop-tc</script>
+                <target-host expression="true">deployed.container.host</target-host>
+                <freemarker-context>
+                    <containerHome expression="true">deployed.container.server.home</containerHome>>
+                    <containerStatusCommand expression="true">deployed.container.server.statusCommand</containerStatusCommand>>
+                    <containerStopCommand expression="true">deployed.container.server.stopCommand</containerStopCommand>>
+                    <containerEnvVars expression="true">deployed.container.server.envVars</containerEnvVars>>
+                </freemarker-context>
+            </os-script>
             <os-script>
                 <order>70</order>
                 <description expression="true">"Start %s Server" % ( deployed.container.name )</description>
@@ -173,11 +189,6 @@
                     <containerEnvVars expression="true">deployed.container.server.envVars</containerEnvVars>>
                 </freemarker-context>
             </os-script>
-            <wait>
-                <order>75</order>
-                <description expression="true">"Wait for application %s to be installed" % (deployed.name)</description>
-                <seconds expression="true">deployed.waitTime</seconds>
-            </wait>
         </steps>
     </rule>
 

@@ -60,6 +60,7 @@
         <property name="targetFileName" required="false" description="Name of the file on the host."/>
         <!--<property name="timeout" kind="integer" default="10" description="waiting time in seconds" category="Liferay"/>-->
         <property name="waitTime" kind="integer" default="30" description="Wait time for application to start in seconds" category="Liferay"/>
+        <property name="stopStart" label="Stop Start Tomcat" kind="boolean" default="true" description="Set this to true if you want to stop and start tomcat server for portlet deployments."/>
     </type>
 
 </synthetic>
