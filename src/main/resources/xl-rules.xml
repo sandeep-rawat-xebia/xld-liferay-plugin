@@ -141,19 +141,6 @@
                 <order>65</order>
                 <description expression="true">"Upload the artifact %s " % ( deployed.name )</description>
             </upload>
-           <!--
-            <os-script>
-                <order>64</order>
-                <description expression="true">"Check file is picked up by Liferay"</description>
-                <script>scripts/check-file-exists.sh.ftl</script>
-                <target-host expression="true">deployed.container.cell.host</target-host>
-            </os-script>
-            -->
-            <wait>
-                <order>75</order>
-                <description expression="true">"Wait for application %s to be installed" % (deployed.name)</description>
-                <seconds expression="true">deployed.waitTime</seconds>
-            </wait>
         </steps>
     </rule>
 
@@ -162,7 +149,7 @@
             <type>liferay.TomcatWarModule</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
-            <expression>deployed.stopStart is True</expression>
+            <expression>deployed.container.stopStart is True</expression>
         </conditions>
         <steps>
             <os-script>
@@ -189,6 +176,11 @@
                     <containerEnvVars expression="true">deployed.container.server.envVars</containerEnvVars>>
                 </freemarker-context>
             </os-script>
+            <wait>
+                <order>75</order>
+                <description expression="true">"Wait for application %s to be installed" % (deployed.name)</description>
+                <seconds expression="true">deployed.waitTime</seconds>
+            </wait>
         </steps>
     </rule>
 
