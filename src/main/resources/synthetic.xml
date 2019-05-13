@@ -60,5 +60,16 @@
         <property name="timeout" kind="integer" default="10" description="waiting time in seconds" category="Liferay"/>
         <property name="waitTime" kind="integer" default="30" description="Wait time for application to stop in seconds" category="Liferay"/>
     </type>
+    
+    <!-- Jboss Application Server CIs -->
+    <type-modification type="jbossas.BaseServer">
+        <property name="deployDirectory" required="false" category="Liferay"/>
+    </type-modification>
+
+    <type type="liferay.JbossWarModule" extends="udm.BaseDeployedArtifact" deployable-type="liferay.JbossWar" container-type="jbossas.BaseServer" description="Deployed Liferay War on Jboss">
+        <generate-deployable type="liferay.JbossWar" extends="jee.War"/>
+        <property name="timeout" kind="integer" default="10" description="Timeout for checking if application is started in seconds" category="Liferay"/>
+        <property name="waitTime" kind="integer" default="30" description="Wait time for application to stop in seconds" category="Liferay"/>
+    </type>
 
 </synthetic>
