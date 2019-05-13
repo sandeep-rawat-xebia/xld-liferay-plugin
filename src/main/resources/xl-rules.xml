@@ -223,5 +223,47 @@
         </os-script>
     </steps>
    </rule>
+    
+    <!-- jboss -->
+
+    <rule name="liferay.JbossWarModule.CREATE_MODIFY" scope="deployed">
+        <conditions>
+            <type>liferay.JbossWarModule</type>
+            <operation>CREATE</operation>
+            <operation>MODIFY</operation>
+        </conditions>
+        <steps>
+            <upload>
+                <target-path expression="true">"%s/%s" % (deployed.container.deployDirectory, deployed.file.name)</target-path>
+                <target-host expression="true">deployed.container.host</target-host>
+                <create-target-path>false</create-target-path>
+                <order>70</order>
+                <description expression="true">"Upload the artifact %s " % ( deployed.name )</description>
+            </upload>
+            <wait>
+                <order>71</order>
+                <description expression="true">"Wait for application %s to be installed" % (deployed.name)</description>
+                <seconds expression="true">deployed.waitTime</seconds>
+            </wait>
+        </steps>
+    </rule>
+
+    <rule name="liferay.JbossWarModule.MODIFY_DESTROY" scope="deployed">
+        <conditions>
+            <type>liferay.JbossWarModule</type>
+            <operation>DESTROY</operation>
+            <operation>MODIFY</operation>
+        </conditions>
+        <steps>
+            <delete>
+                <target-path expression="true">"%s/%s" % (previousDeployed.container.deployDirectory, previousDeployed.file.name)</target-path>
+                <target-host expression="true">previousDeployed.container.host</target-host>
+                <order>30</order>
+                <description expression="true">"Delete the artifact %s from %s" % (previousDeployed.name, previousDeployed.container.deployDirectory)</description>
+            </delete>
+        </steps>
+    </rule>
+
+    <!-- jboss -->
 
 </rules>
